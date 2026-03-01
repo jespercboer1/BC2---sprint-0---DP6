@@ -89,7 +89,7 @@ def main():
             nieuw_recept = Recept(naam, omschrijving)
 
             while True:
-                print("\nVoeg ingrediënten toe aan het recept.")
+                print("\nVoeg een ingrediënten toe aan het recept.")
                 Ingredient_naam = input("Naam van een ingrediënt: ")
                 while True:
                     try:
@@ -104,7 +104,36 @@ def main():
                         break
                     except ValueError:
                         print("Ongeldige invoer. Voer een geheel getal in.")
-                nieuw_recept.voeg_ingredient_toe(Ingredient(Ingredient_naam, Ingredient_hoeveelheid, Ingredient_eenheid, Ingredient_kcal))
+                ingredient = Ingredient(Ingredient_naam, Ingredient_hoeveelheid, Ingredient_eenheid, Ingredient_kcal)
+
+                while True:
+                    keuze_alternatief = input("Plantaardig alternatief toevoegen? (j/n): ")
+                    if keuze_alternatief in ("j", "n"):
+                        break
+                    else:
+                        print("Voer 'j' of 'n' in.")
+
+                if keuze_alternatief == "j":
+                    print("\nVoeg een alternatief ingrediënten toe.")
+                    alternatief_naam = input("Naam van het plantaardige alternatief: ")
+                    while True:
+                        try:
+                            alternatief_hoeveelheid = float(input("Hoeveelheid: "))
+                            break
+                        except ValueError:
+                            print("Ongeldige invoer. Voer een getal in.")
+                    alternatief_eenheid = input("Eenheid (gram, ml, stuks, etc.): ")
+                    while True:
+                        try:
+                            alternatief_kcal = int(input("Aantal kcal voor deze hoeveelheid: "))
+                            break
+                        except ValueError:
+                            print("Ongeldige invoer. Voer een geheel getal in.")
+                    ingredient.set_plantaardig_alternatief(Ingredient(alternatief_naam, alternatief_hoeveelheid, alternatief_eenheid, alternatief_kcal))
+                    print("\nAlternatief toegevoegd!\n")
+
+                nieuw_recept.voeg_ingredient_toe(ingredient)
+                print("\nIngrediënt toegevoegd!\n")
 
                 while True:
                     meer = input("Nog een ingrediënt? (j/n): ")
@@ -117,7 +146,7 @@ def main():
                 print("\n")
 
             while True:
-                print("\nVoeg stappen toe aan het recept.")
+                print("\nVoeg een stap toe aan het recept.")
                 stap_beschrijving = input("Beschrijving van de stap: ")
                 while True:
                     keuze_tip = input("Tip toegevoegen? (j/n): ")
