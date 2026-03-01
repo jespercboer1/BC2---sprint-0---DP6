@@ -1,6 +1,10 @@
 class Stap:
-    def __init__(self, beschijving):
-        self.beschijving = beschijving
+    def __init__(self, beschrijving, tip=None):
+        self.__beschrijving = beschrijving
+        self.__tip = tip
 
     def __str__(self):
-        return self.beschijving
+        if self.__tip:
+            return f"{self.__beschrijving} ({self.__tip})"
+        else:
+            return f"{self.__beschrijving}"
