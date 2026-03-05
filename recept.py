@@ -14,6 +14,12 @@ class Recept:
 
     def get_naam(self):
         return self.__naam
+    
+    def get_omschrijving(self):
+        return self.__omschrijving
+    
+    def get_stappen(self):
+        return self.__stappen
 
     def voeg_stap_toe(self, stap):
         self.__stappen.append(stap)

@@ -250,18 +250,40 @@ def main():
                     # PDF genereren
                     if recept_actie == "2":
                         filename = f"{gekozen.get_naam().replace(' ', '_')}.pdf"
-                        
+
                         doc = SimpleDocTemplate(filename, pagesize=A4)
                         styles = getSampleStyleSheet()
 
-                        title = Paragraph(f"<b>{gekozen.get_naam()}</b>", styles["Title"])
-                        description = Paragraph(str(gekozen), styles["BodyText"])
+                        story = []
 
-                        story = [
-                            title,
-                            Spacer(1, 20),
-                            description
-                        ]
+                        # Titel
+                        story.append(Paragraph(f"<b>{gekozen.get_naam()}</b>", styles["Title"]))
+                        story.append(Spacer(1, 12))
+
+                        # Omschrijving
+                        story.append(Paragraph(f"<i>{gekozen.get_omschrijving()}</i>", styles["BodyText"]))
+                        story.append(Spacer(1, 20))
+
+                        # Ingrediënten titel
+                        story.append(Paragraph("<b>Ingrediënten</b>", styles["Heading2"]))
+                        story.append(Spacer(1, 10))
+
+                        # Ingrediënten lijst
+                        for ingredient in gekozen.get_ingredienten():
+                            tekst = f"- {ingredient.get_hoeveelheid()} {ingredient.get_eenheid()} {ingredient.get_naam()}"
+                            story.append(Paragraph(tekst, styles["BodyText"]))
+
+                        story.append(Spacer(1, 20))
+
+                        # Stappen titel
+                        story.append(Paragraph("<b>Bereidingsstappen</b>", styles["Heading2"]))
+                        story.append(Spacer(1, 10))
+
+                        # Stappen lijst
+                        for i, stap in enumerate(gekozen.get_stappen(), 1):
+                            story.append(Paragraph(f"{i}. {stap.__str__()}", styles["BodyText"]))
+
+                            story.append(Spacer(1, 8))
 
                         doc.build(story)
 
